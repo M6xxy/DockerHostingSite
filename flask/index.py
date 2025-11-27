@@ -1,10 +1,14 @@
 from flask import Flask, render_template, jsonify
+from flask_socketio import SocketIO
 import docker
+import threading
+
 
 app = Flask(__name__)
+socketio = SocketIO(app)
 client = docker.from_env() 
 
-MINECRAFT_CONTAINER = "mc_server"
+
 
 #Webpage
 @app.route('/')
@@ -24,22 +28,68 @@ def login():
     return render_template("login.html")
 
 #Minecraft Server 
+MINECRAFT_CONTAINER = "mc_server"
+MINECRAFT_IMAGE = "itzg/minecraft-server"
+
+
+def get_or_create_container():
+    try:
+        container = client.containers.get(MINECRAFT_CONTAINER)
+    except docker.errors.NotFound:
+        container = client.containers.run(
+            MINECRAFT_IMAGE,
+            name=MINECRAFT_CONTAINER,
+            environment={"EULA": "TRUE", "MEMORY": "2G"},
+            ports={"25565/tcp": 25565},
+            stdin_open=True,
+            tty=True,
+            detach=True
+        )
+    return container
+
+
 @app.route("/serverStart", methods=["POST"])
 def mc_server_start():
-    container = client.containers.get(MINECRAFT_CONTAINER)
+    container = get_or_create_container()
+    container.reload()
     if container.stats != "running":
-        container.start
+        
+        #Start Servver
+        container.start()
+        
+        #Create thread for server logs
+        t = threading.Thread(target=getServerLogs)
+        t.start()
+        
         return jsonify({"status": "starting"})
     return jsonify({"status": "already running"})
 
-@app.route("/serverStop")
+@app.route("/serverStop", methods=["POST"])
 def mc_server_stop():
-    container = client.containers.get(MINECRAFT_CONTAINER)
-    if container.stats == "running":
-        container.start
+    container = get_or_create_container()
+    container.reload()
+    if container.status == "running":
+        container.stop()
         return jsonify({"status": "stopped"})
     return jsonify({"status": "not running"})
 
+def getServerLogs():
+    container = client.containers.get("mc_server")
+    #Get container logss
+    logStream = container.logs(stream=True,follow=True)
+    buffer = ""
+    #Fix console returning single letterss
+    for chunk in logStream:
+        chunk = chunk.decode('utf-8')
+        buffer += chunk
+        while "\n" in buffer:
+            line, buffer = buffer.split("\n",1)
+            socketio.emit('console', {'data': line.strip})
+    
 #DEBUG STUFF
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True, use_reloader=True)
+    
+    
+    #Run App with socketIO
+    socketio.run(app, host="0.0.0.0", port=5000, debug=True, use_reloader=True, allow_unsafe_werkzeug=True)
+

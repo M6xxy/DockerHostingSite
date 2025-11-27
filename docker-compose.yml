@@ -8,15 +8,3 @@ services:
       - "5000:5000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock 
-
-  minecraft:
-    image: itzg/minecraft-server
-    container_name: mc_server
-    environment:
-      EULA: "TRUE"
-      MEMORY: "2G"
-    ports:
-      - "25565:25565"
-    stdin_open: true
-    tty: true
-    restart: unless-stopped
