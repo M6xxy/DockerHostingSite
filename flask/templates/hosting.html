@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+
+    <!-- Link to CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='/template.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/nav.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/hosting.css') }}">
+</head>
+<body>
+<!-- NAV BAR -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('hosting') }}" id="navActive">Minecraft Hosting</a></li>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+    </nav>
+<!-- BODY -->
+    <div id="mainBodyContainer">
+        <button id="serverStartBtn">Start Server</button>
+        <br>
+        <button id="serverStopBtn">Start Server</button>
+
+        <p id="serverResult"></p>
+
+        <script>
+            // SERVER START
+            document.getElementById("serverStartBtn").onclick = function() {
+                fetch("/serverStart", { method: "POST"})
+                    .then(Response => Response.json())
+                    .then(Data => {
+                        document.getElementById("serverResult").innerText = Data.status;;
+                    })
+                    .catch(err => {
+                        document.getElementById("serverResult").innerText = "Error";
+                    })
+            }
+            
+            //SERVER STOP
+            document.getElementById("serverStartBtn").onclick = function() {
+                fetch("/serverStart", { method: "POST"})
+                    .then(Response => Response.json())
+                    .then(Data => {
+                        document.getElementById("serverResult").innerText = Data.status;;
+                    })
+                    .catch(err => {
+                        document.getElementById("serverResult").innerText = "Error";
+                    })
+            }
+
+        </script>
+    </div>
+
+    <footer>
+
+    </footer>
+
+</body>
+</html>
