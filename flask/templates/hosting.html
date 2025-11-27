@@ -22,12 +22,19 @@
     </nav>
 <!-- BODY -->
     <div id="mainBodyContainer">
-        <button id="serverStartBtn">Start Server</button>
-        <p id="serverResult"></p>
-        <br>
-        <button id="serverStopBtn">Stop Server</button>
+        <div id="serverControls">
+            <button id="serverStartBtn">Start Server</button>
+            <p id="serverResult"></p>
+            <button id="serverStopBtn">Stop Server</button>
+        </div>
+        
+
+        <div id="consoleDiv">
+        </div>
 
         
+        
+        <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
 
         <script>
             // SERVER START
@@ -53,6 +60,15 @@
                         document.getElementById("serverResult").innerText = "Error";
                     })
             }
+
+            //Server Console Log
+            
+            var socket = io();
+            socket.on('console', function(msg) {
+                var consoleOutput =document.getElementById('consoleDiv');
+                consoleOutput.innerHTML += msg.data + "\n";
+                consoleOutput.scrollTop =consoleOutput.scrollHeight;
+            })
 
         </script>
     </div>

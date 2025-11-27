@@ -1,8 +1,13 @@
 from flask import Flask, render_template, jsonify
+from flask_socketio import SocketIO
 import docker
+import threading
+
 
 app = Flask(__name__)
+socketio = SocketIO(app)
 client = docker.from_env() 
+
 
 
 #Webpage
@@ -48,7 +53,14 @@ def mc_server_start():
     container = get_or_create_container()
     container.reload()
     if container.stats != "running":
+        
+        #Start Servver
         container.start()
+        
+        #Create thread for server logs
+        t = threading.Thread(target=getServerLogs)
+        t.start()
+        
         return jsonify({"status": "starting"})
     return jsonify({"status": "already running"})
 
@@ -61,6 +73,23 @@ def mc_server_stop():
         return jsonify({"status": "stopped"})
     return jsonify({"status": "not running"})
 
+def getServerLogs():
+    container = client.containers.get("mc_server")
+    #Get container logss
+    logStream = container.logs(stream=True,follow=True)
+    buffer = ""
+    #Fix console returning single letterss
+    for chunk in logStream:
+        chunk = chunk.decode('utf-8')
+        buffer += chunk
+        while "\n" in buffer:
+            line, buffer = buffer.split("\n",1)
+            socketio.emit('console', {'data': line.strip})
+    
 #DEBUG STUFF
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True, use_reloader=True)
+    
+    
+    #Run App with socketIO
+    socketio.run(app, host="0.0.0.0", port=5000, debug=True, use_reloader=True, allow_unsafe_werkzeug=True)
+
