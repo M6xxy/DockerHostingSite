@@ -1,0 +1,34 @@
+#mainBodyContainer #serviceInfo {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 40%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5%;
+}
+
+#mainBodyContainer #serviceInfo .statement {
+    width: 55%;
+    height: 100%;
+    text-align: left;
+    outline: solid;
+    outline-width: 1px;
+    overflow: hidden;
+}
+
+#mainBodyContainer #homeImg {
+    width: 100%;
+    height: 15%;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    display: block;
+}
+
+#mainBodyContainer #faq {
+    height: 37.5%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+}

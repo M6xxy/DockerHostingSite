@@ -7,6 +7,8 @@
     background-color: rgb(240, 240, 240);
     border: 1px;
     border-style: solid;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 footer {
@@ -18,4 +20,8 @@ footer {
     background-color: rgb(240, 240, 240);
     border: 1px;
     border-style: solid;
+}
+
+.centerText {
+    text-align: center;
 }
