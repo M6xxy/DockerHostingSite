@@ -84,7 +84,7 @@ def getServerLogs():
         buffer += chunk
         while "\n" in buffer:
             line, buffer = buffer.split("\n",1)
-            socketio.emit('console', {'data': line.strip})
+            socketio.emit('console', {'data': line.strip()})
     
 #DEBUG STUFF
 if __name__ == '__main__':
