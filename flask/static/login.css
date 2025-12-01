@@ -1,0 +1,48 @@
+#mainBodyContainer #loginWrapper {
+    display: flex;
+    flex-direction:column ;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 15%;
+
+}
+
+#mainBodyContainer #loginWrapper #loginBox {
+    display: flex;
+    flex-direction:column ;
+    align-items: center;
+    outline: solid;
+}
+
+#mainBodyContainer #loginWrapper #loginBox #logRegMode {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 90%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+}
+
+#mainBodyContainer #loginWrapper #loginBox #logRegMode button {
+    width: 75%;
+    height: 4vh;
+}
+
+#mainBodyContainer #loginWrapper #loginBox #userDetails {
+    width: 35vw;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 5%;
+}
+
+#mainBodyContainer #loginWrapper #loginBox #userDetails input {
+    width:75%;
+    height: 4vh;
+}
+
+#mainBodyContainer #loginWrapper #loginBox #userDetails button {
+    width: 40%;
+    height: 3vh;
+}
