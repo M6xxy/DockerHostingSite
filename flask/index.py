@@ -17,7 +17,7 @@ def home():
 
 @app.route('/hosting')
 def hosting():
-    return render_template("hosting.html")
+    return render_template("hostingInfo.html")
 
 @app.route('/about')
 def about():

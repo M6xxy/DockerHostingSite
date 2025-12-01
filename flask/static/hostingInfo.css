@@ -1,0 +1,65 @@
+#mainBodyContainer #statementRow {
+    display: flex;
+    flex-direction: row;
+    min-width: 100%;
+    min-height: 25vh;
+    outline: solid;
+    margin-bottom: 5%;
+}
+
+#mainBodyContainer #wrapperBody {
+    overflow-y: auto;
+}
+
+#mainBodyContainer #statementRow #item1 {
+    display: flex;
+    flex-direction: column;
+    min-width: 60%;
+    min-height: 100%;
+    overflow: hidden;
+}
+
+#mainBodyContainer #statementRow #item2 {
+    min-width: 40%;
+    min-height: 100%;   
+}
+
+
+#mainBodyContainer #statementRow #item2 img {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+#mainBodyContainer #packageRow {
+    display: flex;
+    flex-direction: row;
+    min-width: 100%;
+    min-height: 45vh;
+    align-items: center;
+    justify-content:space-around;
+    
+}
+
+#mainBodyContainer #packageRow .packageItem {
+    width: 30%;
+    outline: solid;
+    overflow: hidden;
+}
+
+
+#mainBodyContainer #packageRow .packageItem img {
+    width: 100%;
+    height: 200px;
+}
+
+#mainBodyContainer #packageRow .packageItem button  {
+    min-width: 100%;
+    min-height: 50px;
+    outline: solid;
+}
+
+#mainBodyContainer #packageRow .packageItem .packageInfo {
+    min-width: 100%;
+    height: 240px;
+    outline: solid;
+}
