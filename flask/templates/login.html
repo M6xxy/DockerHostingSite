@@ -29,11 +29,13 @@
                 <button>Register</button>
             </div>
 
-            <div id="userDetails">
-                <input type="text" name="logUsernmae" id="logUsername"><br>
-                <input type="password" name="logPassword" id="logPassword"><br>
-                <button id="logRegButton">Login</button>
-            </div>
+            <form method="POST" action="/login">
+                <div id="userDetails">
+                    <input type="text" name="logUsername" id="logUsername"><br>
+                    <input type="password" name="logPassword" id="logPassword"><br>
+                    <button id="logRegButton">Login</button>
+                </div>
+            </form>
         </div>
     </div>
         

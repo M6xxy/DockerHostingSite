@@ -1,13 +1,39 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request, redirect, url_for
 from flask_socketio import SocketIO
+from flask_login import *
 import docker
 import threading
 
 
 app = Flask(__name__)
+app.secret_key = "scrt_key"
 socketio = SocketIO(app)
 client = docker.from_env() 
 
+#Login Manager stuff
+loginManager = LoginManager()
+loginManager.init_app(app)
+loginManager.login_view = "login"
+
+#Test DB
+users =  {
+    "test": {"password": "1234"}
+}
+
+#Logged user
+class User(UserMixin):
+    def __init__(self,id):
+        self.id = id
+
+    def __repr__(self):
+        return f"<User {self.id}"
+
+#User Loader
+@loginManager.user_loader
+def loadUser(userId):
+    if userId in users:
+        return User(userId)
+    return None
 
 
 #Webpage
@@ -19,12 +45,36 @@ def home():
 def hosting():
     return render_template("hostingInfo.html")
 
+@app.route('/panel')
+@login_required
+def panel():
+    return render_template("hosting.html")
+
 @app.route('/about')
 def about():
     return render_template("about.html")
 
-@app.route('/login')
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+@app.route('/login', methods=["GET","POST"])
 def login():
+    #Collect Data POST
+    if request.method == "POST":
+        username = request.form.get("logUsername")
+        password = request.form.get("logPassword")
+        
+        #Check if user exists
+        if username in users and users[username]["password"] == password:
+            user = User(username)
+            login_user(user)
+            return redirect(url_for("panel"))
+        #Wrong Details
+        return "Invalid Login Info"
+    #Display Data GET
     return render_template("login.html")
 
 #Minecraft Server 
