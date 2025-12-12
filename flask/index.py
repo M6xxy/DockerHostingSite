@@ -71,25 +71,45 @@ def login():
         if username in users and users[username]["password"] == password:
             user = User(username)
             login_user(user)
-            return redirect(url_for("panel"))
+            return redirect(url_for("hosting"))
         #Wrong Details
-        return "Invalid Login Info"
+        return render_template("login.html", alert_msg="ERROR:WRONG LOGIN INFO")
     #Display Data GET
     return render_template("login.html")
+
+@app.route('/register', methods=["POST"])
+def register():
+    username = request.form.get("regUsername")
+    password = request.form.get("regPassword")
+
+    # Check if user already exists
+    if username in users:
+        return render_template("login.html", alert_msg="ERROR: Username already exists")
+
+    # Add new user to the "database"
+    users[username] = {"password": password}
+
+    # Automatically log in the new user
+    user = User(username)
+    login_user(user)
+
+    return redirect(url_for("hosting"))
+
 
 #Minecraft Server 
 MINECRAFT_CONTAINER = "mc_server"
 MINECRAFT_IMAGE = "itzg/minecraft-server"
+pyRamServer = "NULL"
 
-
-def get_or_create_container():
+def get_or_create_container(ramAmount):
+    #Open Container
     try:
         container = client.containers.get(MINECRAFT_CONTAINER)
     except docker.errors.NotFound:
         container = client.containers.run(
             MINECRAFT_IMAGE,
             name=MINECRAFT_CONTAINER,
-            environment={"EULA": "TRUE", "MEMORY": "2G"},
+            environment={"EULA": "TRUE", "MEMORY": ramAmount,"USE_AIKAR_FLAGS": "true"},
             ports={"25565/tcp": 25565},
             stdin_open=True,
             tty=True,
@@ -98,11 +118,29 @@ def get_or_create_container():
     return container
 
 
+@app.route("/serverSelect", methods=["POST"])
+def mc_server_select():
+    global pyRamServer
+    #If new ram selected kill container
+    if(pyRamServer != request.form.get("ram")):
+        try:
+            container = client.containers.get(MINECRAFT_CONTAINER)
+            container.reload()
+            container.remove(force=True)
+        except docker.errors.NotFound:
+            pass    
+        #Get ram
+        pyRamServer = request.form.get("ram")
+        print("PYRAM DETECTED: ", pyRamServer, flush=True)
+    
+    return render_template("hosting.html")
+
 @app.route("/serverStart", methods=["POST"])
+
 def mc_server_start():
-    container = get_or_create_container()
+    container = get_or_create_container(pyRamServer)
     container.reload()
-    if container.stats != "running":
+    if container.stats != "Running":
         
         #Start Servver
         container.start()
@@ -111,15 +149,16 @@ def mc_server_start():
         t = threading.Thread(target=getServerLogs)
         t.start()
         
-        return jsonify({"status": "starting"})
-    return jsonify({"status": "already running"})
+        return jsonify({"status": "Running"})
+    return jsonify({"status": "Already running"})
 
 @app.route("/serverStop", methods=["POST"])
 def mc_server_stop():
-    container = get_or_create_container()
+    container = client.containers.get(MINECRAFT_CONTAINER)
     container.reload()
     if container.status == "running":
         container.stop()
+        container.remove(force=True)
         return jsonify({"status": "stopped"})
     return jsonify({"status": "not running"})
 

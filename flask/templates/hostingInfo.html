@@ -29,66 +29,111 @@
         <div id="wrapperBody">
             <div id="statementRow">
                 <div id="item1">
-                    <h1>Banananananana</h1>
+                    <h1>The Ultimate Server Experience</h1>
 
-                    <p>As part of the recruitment and enrolment process for this apprenticeship, candidates must provide proof of all required qualifications. Original certificates or certified copies must be submitted. This is a mandatory requirement to secure the position. The deadline for providing qualification certificates for the RME Mechatronics programme is 17 July 2026. Applications without verified qualifications by this date will automatically be unsuccessful. Failure to provide proof of qualifications by the stated deadline will result in the withdrawal of any conditional offer, and you will not be able to commence the apprenticeship programme. Previous qualifications will be reviewed for funding eligibility and offers may be withdrawn for applicants who do not meet funding criteria.
+                    <p>
+                        Welcome to a hosting platform built specifically for Minecraft players, creators,
+                         and communities who expect more than the bare minimum. Our mission is to provide a seamless,
+                          powerful, and worry-free server environment where your worlds can grow without limits.
+                           Whether you're hosting a private survival SMP with friends, experimenting with redstone megabases,
+                            or building a large-scale modded adventure for hundreds of players, we deliver the performance,
+                             stability, and flexibility needed to bring your vision to life.
+                   </p>
 
-Basic Qualificat</p>
+                   <p>
+                    Our infrastructure is built on high-performance hardware optimized exclusively for Minecraft workloads.
+                     With ultra-fast NVMe storage, dedicated CPU power, and advanced DDoS protection, your server stays online,
+                      lag-free, and reliable 24/7. Every plan includes easy management tools, automated backups, instant setup,
+                       and support for all major Minecraft versions, plugins, and modpacks.
+                   </p>
+
+                   <p>
+                    Take your gameplay to the next level with a hosting solution designed for builders, dreamers, and community leaders.
+                   </p>
                 </div>
 
                 <div id="item2">
-                    <img src="" alt="">
+                    <img src="{{ url_for('static', filename='Imgs/hostInfoCover.jpg') }}" alt="">
                 </div>
             </div>
 
             <div id="packageRow">
                 <div class="packageItem">
-                    <img src="" alt="">
+                    <img src="{{ url_for('static', filename='Imgs/woodPack.jpg') }}" alt="">
                     <div class="packageInfo">
-                        <p>Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, 
+                        <p>This plan is built for small groups who want smooth performance without needing high-end hardware.
+                             Ideal for light building, exploring, and basic redstone.
+                            </p>
+
+                        <p> ✔ 4 GB RAM<br>
+                            ✔ Basic CPU allocation<br>
+                            ✔ Unlimited player slots (performance-based)<br>
+                            ✔ Instant server setup<br>
+                            ✔ Full file access via FTP<br>
+                            ✔ Automatic daily backups<br>
+                            ✔ Supports Vanilla<br>
                         </p>
                     </div>
-                    <button>Create Server</button>
+                    {% if  current_user.is_authenticated %}
+                    <form action="/serverSelect" method="POST">
+                        <input type="hidden" name="ram" value="4G">
+                        <button type="submit">Create Server</button>
+                    </form>
+                    {% endif %}
                 </div>
 
                 <div class="packageItem">
-                    <img src="" alt="">
+                    <img src="{{ url_for('static', filename='Imgs/goldPack.png') }}" alt="">
                     <div class="packageInfo">
-                        <p>Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, 
+                        <p>
+                            If your world is getting bigger-or if you want to run performance-heavy plugins or modded setups—this plan gives you the power you need.
+                        </p>
+                        <p> ✔ 8 GB RAM<br>
+                            ✔ Basic CPU allocation<br>
+                            ✔ Unlimited player slots (performance-based)<br>
+                            ✔ Instant server setup<br>
+                            ✔ Full file access via FTP<br>
+                            ✔ Automatic daily backups<br>
+                            ✔ Supports Vanilla<br>
                         </p>
                     </div>
-                    <button>Create Server</button>
+                    {% if  current_user.is_authenticated %}
+                    <form action="/serverSelect" method="POST">
+                        <input type="hidden" name="ram" value="8G">
+                        <button type="submit">Create Server</button>
+                    </form>
+                    {% endif %}
                 </div>
 
                 <div class="packageItem">
-                    <img src="" alt="">
+                    <img src="{{ url_for('static', filename='Imgs/diamondPack.jpg') }}" alt="">
                     <div class="packageInfo">
-                        <p>Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, Package Info, 
-                            Package Info, Package Info, Package Info, 
+                        <p>
+                        The Titan Plan is built for big servers, creators, and advanced players who need top-tier hardware. If you're running large modpacks this is it!
+                        </p>
+                        <p> ✔ 16 GB RAM
+                            ✔ Basic CPU allocation<br>
+                            ✔ Unlimited player slots (performance-based)<br>
+                            ✔ Instant server setup<br>
+                            ✔ Full file access via FTP<br>
+                            ✔ Automatic daily backups<br>
+                            ✔ Supports Vanilla<br>
                         </p>
                     </div>
-                    <button>Create Server</button>
+                    {% if  current_user.is_authenticated %}
+                    <form action="/serverSelect" method="POST">
+                        <input type="hidden" name="ram" value="16G">
+                        <button type="submit">Create Server</button>
+                    </form>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
     
     <footer>
-
+        © 2025 ScuffedHost - Fast, Reliable Minecraft Server Hosting.<br>
+        Built for players. Powered by performance.
     </footer>
 </body>
 </html>

@@ -3,9 +3,10 @@ nav  {
     height: 100%;
     margin-left: 2.5%;
     margin-top: 1.5%;
-    border-color: black;
-    border: 1px;
+    border: 2px;
+    border-radius: 25px;
     border-style: solid;
+    border-color: #213d53;
 }
 
 nav ul {
@@ -16,6 +17,8 @@ nav ul {
     padding: 0%;
     overflow: hidden;
     align-items: center;
+    background-color: #213d53;
+    border-radius: 25px;
     
 }
 
@@ -23,6 +26,7 @@ nav ul li {
     flex: 1;
     height: 90px;
     padding: 0;
+    
 }
 
 
@@ -30,19 +34,19 @@ nav ul li a {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(212, 212, 212, 0.993);
+    background-color: #213d53;
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 24pt;
     height: 90px;
-    color: black;
-    outline: 0.5px solid black;
+    color: white;
+    border-radius: 25px;
 }
 
 #navActive {
-    background-color: red;
+    background-color: #508991;
 }
 
 nav ul li a:hover {
-    background-color: aqua;
+    background-color: #74B3CE;
 }

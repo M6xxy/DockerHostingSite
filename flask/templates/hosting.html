@@ -28,9 +28,14 @@
 <!-- BODY -->
     <div id="mainBodyContainer">
         <div id="serverControls">
-            <button id="serverStartBtn">Start Server</button>
-            <p id="serverResult"></p>
-            <button id="serverStopBtn">Stop Server</button>
+            <div id="resultOutputDiv">
+                <h2 id="serverResult"></h2>
+            </div>
+
+            <div id="serverButtons">
+                <button id="serverStartBtn">Start Server</button>
+                <button id="serverStopBtn">Stop Server</button>
+            </div>
         </div>
         
 
@@ -42,27 +47,38 @@
         <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
 
         <script>
-            // SERVER START
+            //On Load get server status
+            window.onload = function() {
+                fetch("/serverStart", { method: "POST"})
+                    .then(Response => Response.json())
+                    .then(Data => {
+                        document.getElementById("serverResult").innerText = "Server Status: " + Data.status;;
+                    })
+                    .catch(err => {
+                        document.getElementById("serverResult").innerText = "Server Status: " + "Not Running";
+                    })
+            }
+            // SERVER START BTN
             document.getElementById("serverStartBtn").onclick = function() {
                 fetch("/serverStart", { method: "POST"})
                     .then(Response => Response.json())
                     .then(Data => {
-                        document.getElementById("serverResult").innerText = Data.status;;
+                        document.getElementById("serverResult").innerText = "Server Status: " + Data.status;;
                     })
                     .catch(err => {
-                        document.getElementById("serverResult").innerText = "Error";
+                        document.getElementById("serverResult").innerText = "Server Status: " + "Error";
                     })
             }
             
-            //SERVER STOP
+            //SERVER STOP BTN
             document.getElementById("serverStopBtn").onclick = function() {
                 fetch("/serverStop", { method: "POST"})
                     .then(Response => Response.json())
                     .then(Data => {
-                        document.getElementById("serverResult").innerText = Data.status;;
+                        document.getElementById("serverResult").innerText = "Server Status: " + Data.status;;
                     })
                     .catch(err => {
-                        document.getElementById("serverResult").innerText = "Error";
+                        document.getElementById("serverResult").innerText = "Server Status: " + "Error";
                     })
             }
 
@@ -79,7 +95,8 @@
     </div>
 
     <footer>
-
+        © 2025 ScuffedHost - Fast, Reliable Minecraft Server Hosting.<br>
+        Built for players. Powered by performance.
     </footer>
 
 </body>

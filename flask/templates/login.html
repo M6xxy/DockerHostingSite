@@ -25,24 +25,59 @@
         <div id="loginWrapper">
             <div id="loginBox">
             <div id="logRegMode">
-                <button>Login</button><br>
-                <button>Register</button>
+                <button id="logFormRequestBtn" class = "btnActive">Login</button><br>
+                <button id="regFormRequestBtn">Register</button>
             </div>
 
-            <form method="POST" action="/login">
+            <form method="POST" action="/login" id="logForm">
                 <div id="userDetails">
                     <input type="text" name="logUsername" id="logUsername"><br>
                     <input type="password" name="logPassword" id="logPassword"><br>
                     <button id="logRegButton">Login</button>
                 </div>
             </form>
+
+            <form method="POST" action="/register" style="display:none;" id="regForm">
+                <div id="userDetails">
+                    <input type="text" name="regUsername" id="regUsername"><br>
+                    <input type="password" name="regPassword" id="regPassword"><br>
+                    <button id="regRegButton">Login</button>
+                </div>
+            </form>
+
         </div>
     </div>
+    
+    <!--WRONG DETAILS ALERT-->
+    {% if alert_msg %}
+    <script>
+        window.alert("{{ alert_msg }}");
+    </script>
+    {% endif %}
         
-    </div>
+    <script>
+        document.getElementById("logFormRequestBtn").style.backgroundColor = "#74B3CE";
+        const loginForm =document.getElementById("logForm")
+        const regForm = document.getElementById("regForm")
+        //On click change logForm
+        document.getElementById("logFormRequestBtn").onclick = () => {
+                loginForm.style.display = "block";
+                regForm.style.display = "none";
+                document.getElementById("logFormRequestBtn").style.backgroundColor = "#74B3CE";
+                document.getElementById("regFormRequestBtn").style.backgroundColor = "#508991";
+        }
+        //on click change regForm
+        document.getElementById("regFormRequestBtn").onclick = () => {
+            loginForm.style.display = "none";
+                regForm.style.display = "block";
+                document.getElementById("regFormRequestBtn").style.backgroundColor = "#74B3CE";
+                document.getElementById("logFormRequestBtn").style.backgroundColor = "#508991";
+        }
+    </script>
 
     <footer>
-
+        © 2025 ScuffedHost - Fast, Reliable Minecraft Server Hosting.<br>
+        Built for players. Powered by performance.
     </footer>
 
 </body>

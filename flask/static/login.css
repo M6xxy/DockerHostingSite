@@ -3,7 +3,7 @@
     flex-direction:column ;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 15%;
+    margin-top:12%;
 
 }
 
@@ -11,7 +11,10 @@
     display: flex;
     flex-direction:column ;
     align-items: center;
+    color: #213d53;
     outline: solid;
+    background-color: #213d53;
+    border-radius: 25px;
 }
 
 #mainBodyContainer #loginWrapper #loginBox #logRegMode {
@@ -21,11 +24,28 @@
     height: 30%;
     display: flex;
     justify-content: center;
+    
 }
 
 #mainBodyContainer #loginWrapper #loginBox #logRegMode button {
     width: 75%;
     height: 4vh;
+    background-color: #508991;
+    border-radius: 25px;
+    color: white;
+    border:0;
+    
+}
+
+
+#mainBodyContainer #loginWrapper #loginBox #logRegMode button:hover {
+    width: 75%;
+    height: 4vh;
+    background-color: #74B3CE;
+    border-radius: 25px;
+    color: white;
+    border:0;
+    
 }
 
 #mainBodyContainer #loginWrapper #loginBox #userDetails {
@@ -40,9 +60,27 @@
 #mainBodyContainer #loginWrapper #loginBox #userDetails input {
     width:75%;
     height: 4vh;
+    border-radius: 25px;
+    border:0;
 }
 
 #mainBodyContainer #loginWrapper #loginBox #userDetails button {
     width: 40%;
     height: 3vh;
+    background-color: #508991;
+    border-radius: 25px;
+    color: white;
+    border:0;
+}
+#mainBodyContainer #loginWrapper #loginBox #userDetails button:hover {
+    width: 40%;
+    height: 3vh;
+    background-color: #74B3CE;
+    border-radius: 25px;
+    color: white;
+    border:0;
+}
+
+.btnActive {
+    background-color: #74B3CE;
 }
